@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # before_action :admin
-  skip_before_action :authenticate!, only: [:create, :index]
+  skip_before_action :authenticate!, only: [:create, :index, :show ]
 
 
   def create
@@ -34,10 +34,11 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+
   def show
     @user = User.find(params[:user_id])
     if @user
-      render json: user_hash(@user)
+      render json: @user
     end
   end
 

@@ -25,7 +25,16 @@ export default class Upload extends React.Component{
   }
 
   componentDidMount(){
-    fetch('http://localhost:4000/users/1').then(r => r.json()).then(r => r.libraries.forEach(lib => this.setState({libs: [...this.state.libs, lib]})))
+    fetch(`http://localhost:4000/users/${this.props.auth.user_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/javascript",
+        "Authorization": `Token token=${ this.props.auth.token }`
+      }
+    })
+    .then(r => r.json())
+    .then(r => r.libraries.forEach(lib => this.setState({libs: [...this.state.libs, lib]})))
   }
 
   onSuccess = (response) => {
@@ -38,10 +47,10 @@ export default class Upload extends React.Component{
         body:
         JSON.stringify({
           name: this.state.newLib,
-          user_id: 1
+          user_id: this.props.auth.user_id
         })
       })
-    } 
+    }
     this.setState({handle: JSON.stringify(response.filesUploaded[0].handle)})
     this.postUpload()
   }
@@ -50,7 +59,8 @@ export default class Upload extends React.Component{
     fetch('http://localhost:4000/books', {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Token token=${ this.props.auth.token }`
       },
       body: JSON.stringify({
         title: this.state.title,
@@ -68,6 +78,7 @@ export default class Upload extends React.Component{
 
 
   render(){
+    console.log(this.props.auth.user_id)
     const renderLibraries = this.state.libs.map(lib => {
       return (<option value="selectedLib"key={lib.name}>{lib.name}</option>)
     })

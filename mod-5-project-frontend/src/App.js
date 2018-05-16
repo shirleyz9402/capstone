@@ -5,25 +5,29 @@ import Upload from './components/Upload'
 import Login from './components/Login'
 import Register from './components/Register'
 import Logout from './components/Logout'
-import Library from './components/Library'
+import LibraryBrowser from './components/LibraryBrowser'
 import AllBooks from './components/AllBooks'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class App extends Component {
   state = {
-
+    auth: {
+      user_id: null,
+      username: '',
+      token: ""
+    }
   }
 
   componentDidMount() {
     if (localStorage.auth) {
       const auth = JSON.parse(localStorage.auth)
-      this.setState({ auth });
+      this.setState({ auth: auth });
     }
   }
 
   authFetched = (auth) =>{
     localStorage.auth = JSON.stringify(auth);
-    this.setState({ auth });
+    this.setState({ auth: auth });
   }
 
   logout = () => {
@@ -39,8 +43,12 @@ class App extends Component {
               return <AllBooks auth={ this.state.auth } />
             }
           } />
-          <Route exact path="/library" render={ (renderProps) => {
-              return <Library auth={ this.state.auth } />
+          <Route exact path="/libraries" render={ (renderProps) => {
+              return <LibraryBrowser auth={ this.state.auth } />
+            }
+          } />
+          <Route exact path="/upload" render={ (renderProps) => {
+              return <Upload auth={ this.state.auth } />
             }
           } />
           <Route exact path="/logout" render={ (renderProps) => {
@@ -55,6 +63,7 @@ class App extends Component {
     }
   }
   render() {
+    console.log(this.state.auth)
     return (
       <div className="App">
         <header className="App-header">
@@ -68,6 +77,7 @@ class App extends Component {
             <div>
               <Link to="/books">Books</Link>
               <Link to="/library">Library</Link>
+              <Link to="/upload">Upload</Link>
               <Link to="/logout">Log out</Link>
             </div>
           :
@@ -76,18 +86,15 @@ class App extends Component {
               <Link to="/login">Login</Link>
             </div>
         }
-          <div>
-            <Route exact path="/register" render={ (renderProps) =>
-              <Register history={ renderProps.history } authSet={ this.authFetched } />
-            } />
-            <Route exact path="/login" render={ (renderProps) =>
-              <Login history={ renderProps.history } authSet={ this.authFetched } />
-            } />
-            <Route exact path="/upload" render={ (renderProps) =>
-              <Upload history={ renderProps.history } authSet={ this.authFetched } />
-            } />
-            {this.authyBits()}
-          </div>
+            <div>
+              <Route exact path="/register" render={ (renderProps) =>
+                <Register history={ renderProps.history } authSet={ this.authFetched } />
+              } />
+              <Route exact path="/login" render={ (renderProps) =>
+                <Login history={ renderProps.history } authSet={ this.authFetched } />
+              } />
+              {this.authyBits()}
+            </div>
           </div>
         </Router>
       </div>

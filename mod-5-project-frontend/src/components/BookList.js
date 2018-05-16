@@ -7,11 +7,15 @@ export default class BookList extends React.Component {
   }
 
   componentDidMount(){
-    if (!this.state.books.length) this.getBooks();
+    if (!this.state.books.length) {
+      this.getBooks()
+    };
   }
 
   componentDidUpdate(){
-    if (!this.state.books.length) this.getBooks();
+    if (!this.state.books.length){
+      this.getBooks()
+    };
   }
 
   getBooks() {
