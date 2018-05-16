@@ -11,8 +11,11 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
-    render json: @books
+    if logged_in?
+      render json: Book.all
+    else
+      render json: { go_away: true }
+    end
   end
 
   def show
