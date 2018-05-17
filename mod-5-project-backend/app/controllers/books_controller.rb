@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-
+skip_before_action :authenticate!
   def create
     library = Library.find_by(id: params[:library_id])
     if library.books.find{|book| book.title == params[:title]}
@@ -11,15 +11,17 @@ class BooksController < ApplicationController
   end
 
   def index
-    if logged_in?
-      render json: Book.all
-    else
-      render json: { go_away: true }
-    end
+    render json: Book.all
   end
 
   def show
     @book = Book.find(params[:id])
+    render json: @book
+  end
+  
+  def update
+    @book = Book.find(params[:id])
+    @book.update(book_params)
     render json: @book
   end
 

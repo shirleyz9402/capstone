@@ -19,7 +19,7 @@ export default class Upload extends React.Component{
       title: '',
       author: '',
       libs: [],
-      selectedLib: '',
+      selectedLib: null,
       newLib: ''
     }
   }
@@ -42,13 +42,15 @@ export default class Upload extends React.Component{
       fetch('http://localhost:4000/libraries', {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "Authorization": `Token token=${ this.props.auth.token }`
         },
-        body:
-        JSON.stringify({
-          name: this.state.newLib,
-          user_id: this.props.auth.user_id
-        })
+        body: JSON.stringify(
+          {
+            name: this.state.newLib,
+            user_id: this.props.auth.user_id
+          }
+        )
       })
     }
     this.setState({handle: JSON.stringify(response.filesUploaded[0].handle)})
@@ -65,7 +67,8 @@ export default class Upload extends React.Component{
       body: JSON.stringify({
         title: this.state.title,
         author: this.state.author,
-        url: 'https://www.filestackapi.com/api/file/' + this.state.handle
+        url: 'https://www.filestackapi.com/api/file/' + this.state.handle,
+        library_id: this.state.selectedLib.id
       })
     })
     .then(r => r.json())
@@ -73,14 +76,19 @@ export default class Upload extends React.Component{
   }
 
   handleChange = event => {
-    this.setState({[event.target.id]: event.target.value})
+    if (event.target.id === "selectedLib"){
+      this.setState({selectedLib: event.target.key})
+    }
+    else{
+      this.setState({[event.target.id]: event.target.value})
+    }
   }
 
 
   render(){
-    console.log(this.props.auth.user_id)
+    console.log(this.state)
     const renderLibraries = this.state.libs.map(lib => {
-      return (<option value="selectedLib"key={lib.name}>{lib.name}</option>)
+      return (<option key={lib}>{lib.name}</option>)
     })
     return(
     <div>

@@ -1,9 +1,9 @@
 class LibrariesController < ApplicationController
-
+skip_before_action :authenticate!
   def create
-    @library = Library.new
-    @library.name = params[:name]
-    @library.user_id = params[:user_id]
+    @library = Library.create(library_params)
+    # @library.name = params[:name]
+    # @library.user_id = params[:user_id]
     render json: @library
   end
 
@@ -21,11 +21,8 @@ class LibrariesController < ApplicationController
   end
 
   def index
-    if logged_in?
-      render json: Library.all
-    else
-      render json: { go_away: true }
-    end
+    @libraries = Library.all
+    render json: @libraries
   end
 
   def show

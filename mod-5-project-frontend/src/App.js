@@ -63,7 +63,7 @@ class App extends Component {
     }
   }
   render() {
-    console.log(this.state.auth)
+    // console.log(this.state.auth)
     return (
       <div className="App">
         <header className="App-header">
@@ -76,7 +76,7 @@ class App extends Component {
         { this.state.auth ?
             <div>
               <Link to="/books">Books</Link>
-              <Link to="/library">Library</Link>
+              <Link to="/libraries">Library</Link>
               <Link to="/upload">Upload</Link>
               <Link to="/logout">Log out</Link>
             </div>
