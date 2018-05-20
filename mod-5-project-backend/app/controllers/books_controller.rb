@@ -18,7 +18,7 @@ skip_before_action :authenticate!
     @book = Book.find(params[:id])
     render json: @book
   end
-  
+
   def update
     @book = Book.find(params[:id])
     @book.update(book_params)

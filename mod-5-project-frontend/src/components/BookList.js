@@ -1,53 +1,47 @@
 import React from 'react';
 import Reader from './Reader'
+import ReactFilestack from 'filestack-react';
+
+const apikey = 'AhRLM73SCSb2Q9Z4OPxwsz'
+
 
 export default class BookList extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(){
+    super()
     this.state = {
       selectedbook: null
     }
   }
-  handleClick = event => {
-    this.setState({selectedbook: this.props.books.find(book => book.title === event.target.value)})
+
+  onSuccess = response => {
+    this.setState({
+      selectedbook: response,
+    })
   }
-  // componentDidMount(){
-  //   if (!this.state.books.length) {
-  //     this.getBooks()
-  //   };
-  // }
-
-  // componentDidUpdate(){
-  //   if (!this.state.books.length){
-  //     this.getBooks()
-  //   };
-  // }
-
-  // getBooks() {
-  //   if (!this.props.auth) {
-  //     return
-  //   }
-  //   fetch(this.props.url, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/javascript",
-  //       "Authorization": `Token token=${ this.props.auth.token }`
-  //     }
-  //   }).then(res => res.json()).then(data => this.setState({ books: data }))
+  // handleBack = event => {
+  //   this.setState({selectedbook: null})
   // }
 
   render(){
-    console.log(this.state)
-    console.log(this.props)
+    console.log('BOOKLIST STATE',this.state)
+    console.log('BOOKLIST PROPS', this.props)
   const renderBooks = this.props.books.map(book => {
     return (
-      <button value={book.title} onClick={this.handleClick} key={ book.id }>{ book.title }</button>
+      // <button value={book.title} onClick={this.handleClick} key={ book.id }>{ book.title }</button>
+        <ReactFilestack
+        apikey={apikey}
+        mode="retrieve"
+        buttonText={book.title}
+        options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
+        onSuccess={this.onSuccess}
+        />
+
     )}
   )
     return (
     <ol>
-      {this.state.selectedbook === null ? renderBooks : <Reader {...this.props} book={this.state.selectedbook}/>}
+      {this.state.selectedbook === null ? renderBooks : <Reader {...this.props} book= {this.state.selectedbook}/>
+      }
     </ol>
   )}
 }

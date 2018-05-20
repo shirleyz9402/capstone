@@ -7,6 +7,7 @@ import Register from './components/Register'
 import Logout from './components/Logout'
 import LibraryBrowser from './components/LibraryBrowser'
 import AllBooks from './components/AllBooks'
+import Reader from './components/Reader'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class App extends Component {
@@ -63,7 +64,7 @@ class App extends Component {
     }
   }
   render() {
-    // console.log(this.state.auth)
+    console.log('APP STATE',this.state.auth)
     return (
       <div className="App">
         <header className="App-header">
@@ -75,14 +76,15 @@ class App extends Component {
         <div>
         { this.state.auth ?
             <div>
-              <Link to="/books">Books</Link>
-              <Link to="/libraries">Library</Link>
-              <Link to="/upload">Upload</Link>
-              <Link to="/logout">Log out</Link>
+              <Link to="/"> Home </Link>
+              <Link to="/books"> Books </Link>
+              <Link to="/libraries"> Library </Link>
+              <Link to="/upload"> Upload </Link>
+              <Link to="/logout"> Log out </Link>
             </div>
           :
             <div>
-              <Link to="/register">Register</Link>
+              <Link to="/register">Register</Link><br/>
               <Link to="/login">Login</Link>
             </div>
         }

@@ -9,6 +9,8 @@ import {
   FontSizeButton
 } from '../containers/EpubContainer'
 
+
+
 const storage = global.localStorage || null
 
 export default class Reader extends React.Component{
@@ -70,8 +72,10 @@ export default class Reader extends React.Component{
   }
 
   render(){
-    const { fullscreen, location } = this.state
+    // console.log(this.props.book.url)
+    const { location } = this.state
     return (
+      <div>
       <Container>
         <Bar>
           <CloseButton onClick={this.toggleFullscreen}>
@@ -79,9 +83,9 @@ export default class Reader extends React.Component{
             <CloseIcon />
           </CloseButton>
         </Bar>
-        <ReaderContainer fullscreen={fullscreen}>
+        <ReaderContainer>
           <ReactReader
-            url={this.props.book.url}
+            url={this.props.book}
             locationChanged={this.onLocationChanged}
             title={this.props.book.title}
             location={location}
@@ -92,6 +96,7 @@ export default class Reader extends React.Component{
           </FontSizeButton>
         </ReaderContainer>
       </Container>
+      </div>
     )
   }
 }

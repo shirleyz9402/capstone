@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # before_action :admin
-  skip_before_action :authenticate!, only: [:create, :index, :show ]
+  skip_before_action :authenticate!, only: [:create, :index, :show]
 
 
   def create
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def users_libraries
-    if current_user_id && current_user_id == params[:user_id]
+    if current_user_id && current_user_id.to_s == params[:user_id]
       @user = User.find_by(id: params[:user_id])
       if @user
         render json: @user.libraries

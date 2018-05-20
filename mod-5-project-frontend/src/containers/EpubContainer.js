@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import breakpoint from 'styled-components-breakpoint'
 
 export const Container = styled.div`
-  position: relative;
-  width: 100%;
+  position: absolute;
+  width: 90%;
   height: 100%;
-  background: linear-gradient(to bottom, #f2f2f2 0%, #333 100%);
+  // background: linear-gradient(to bottom, #f2f2f2 0%, #333 100%);
 `
 export const ReaderContainer = styled.div`
   font-size: 16px;

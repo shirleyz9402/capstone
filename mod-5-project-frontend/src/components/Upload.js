@@ -52,12 +52,13 @@ export default class Upload extends React.Component{
           }
         )
       })
+      this.setState({handle: JSON.stringify(response.filesUploaded[0].handle)})
     }
-    this.setState({handle: JSON.stringify(response.filesUploaded[0].handle)})
     this.postUpload()
   }
 
   postUpload = () => {
+    if(this.state.selectedLib){
     fetch('http://localhost:4000/books', {
       method: "POST",
       headers: {
@@ -67,17 +68,35 @@ export default class Upload extends React.Component{
       body: JSON.stringify({
         title: this.state.title,
         author: this.state.author,
-        url: 'https://www.filestackapi.com/api/file/' + this.state.handle,
+        url:  'https://cdn.filestackcontent.com/' + this.state.handle,
         library_id: this.state.selectedLib.id
       })
     })
     .then(r => r.json())
     .then(r => r ? null : alert('This book has already been added to your library!'))
+    }
+    else {
+      fetch('http://localhost:4000/books', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Token token=${ this.props.auth.token }`
+        },
+        body: JSON.stringify({
+          title: this.state.title,
+          author: this.state.author,
+          url:  'https://cdn.filestackcontent.com/' + this.state.handle,
+          library_id: this.state.libs.length + 1
+        })
+      })
+      .then(r => r.json())
+      .then(r => r ? null : alert('This book has already been added to your library!'))
+    }
   }
 
   handleChange = event => {
     if (event.target.id === "selectedLib"){
-      this.setState({selectedLib: event.target.key})
+      this.setState({selectedLib: this.state.libs.find(lib => lib.name = event.target.value)})
     }
     else{
       this.setState({[event.target.id]: event.target.value})
@@ -86,9 +105,9 @@ export default class Upload extends React.Component{
 
 
   render(){
-    console.log(this.state)
+    console.log(this.state.libs.length + 1)
     const renderLibraries = this.state.libs.map(lib => {
-      return (<option key={lib}>{lib.name}</option>)
+      return (<option value={lib.id} key={lib.name}>{lib.name}</option>)
     })
     return(
     <div>

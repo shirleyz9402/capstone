@@ -1,18 +1,18 @@
 
 import React from 'react';
 import BookList from './BookList'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 
-export default class AllBooks extends React.Component {
-// constructor(props){
-//   super(props)
-//   this.state = {
-//     books: this.props.lib.books
-//   }
-//
-// }
+export default class Library extends React.Component {
+
   render(){
-    // console.log(this.props)
+      // console.log(this.props)
     return (
-      <BookList { ...this.props } books={this.props.lib.books} url={`http://localhost:4000/users/${ this.props.auth.user_id }/libraries/${this.props.lib.id}`} />  )}
+      <div>
+      <Link to='/'>Back</Link>
+      <BookList { ...this.props } books={this.props.lib.books} />
+      </div>
+    )
+  }
 }
