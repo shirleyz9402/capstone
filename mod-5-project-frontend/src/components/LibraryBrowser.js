@@ -1,6 +1,6 @@
 import React from 'react';
 import Library from './Library'
-import {Route} from 'react-router-dom';
+import {Link} from 'react-router-dom'
 
 
 
@@ -8,8 +8,7 @@ export default class LibraryBrowser extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      libs: [],
-      selectedLib: null
+      libs: []
     }
   }
   componentDidMount(){
@@ -26,9 +25,7 @@ export default class LibraryBrowser extends React.Component {
     .then(r => r.libraries.forEach(lib => this.setState({libs: [...this.state.libs, lib]})))
     }
   }
-  handleClick = event => {
-    this.setState({selectedLib: this.state.libs.find(lib => lib.name === event.target.value)})
-  }
+
   handleBack = event => {
     if (this.state.selectedLib){
     this.setState({selectedLib: null})
@@ -41,16 +38,13 @@ export default class LibraryBrowser extends React.Component {
     console.log('LIBRARYBROWSER STATE',this.state)
     const renderLibs = this.state.libs.map(lib => {
       return (
-        <button value={lib.name} key={lib.name} onClick={this.handleClick}>{lib.name}</button>
+        <Link to={`/libraries/${lib.id}`} value={lib.name} key={lib.name}>{lib.name}</Link>
       )
     })
 
     return (
       <div>
-        {this.state.selectedLib === null ? renderLibs :
-        <div>
-          <Library {...this.props} lib={this.state.selectedLib}/>
-        </div>}
+        {renderLibs}
       </div>
   )}
 }

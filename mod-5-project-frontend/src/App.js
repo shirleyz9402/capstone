@@ -8,7 +8,8 @@ import Logout from './components/Logout'
 import LibraryBrowser from './components/LibraryBrowser'
 import AllBooks from './components/AllBooks'
 import Reader from './components/Reader'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Library from './components/Library'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 class App extends Component {
   state = {
@@ -40,16 +41,28 @@ class App extends Component {
     if (this.state.auth) {
       return (
         <div>
-          <Route exact path="/books" render={ (renderProps) => {
-              return <AllBooks auth={ this.state.auth } />
+        <Switch>
+          <Route exact path='/books' render={ (renderProps) => {
+              return <AllBooks history={ renderProps.history } auth={ this.state.auth } />
             }
           } />
-          <Route exact path="/libraries" render={ (renderProps) => {
-              return <LibraryBrowser auth={ this.state.auth } />
+          <Route path='/books/:id' render={ (renderProps) => {
+              return <Reader history={ renderProps.history } auth={ this.state.auth } />
             }
           } />
+          </Switch>
+          <Switch>
+          <Route exact path='/libraries' render={ (renderProps) => {
+              return <LibraryBrowser history={ renderProps.history } auth={ this.state.auth } />
+            }
+          } />
+          <Route  path='/libraries/:id' render={ (renderProps) => {
+              return <Library history={ renderProps.history } auth={ this.state.auth } />
+            }
+          } />
+          </Switch>
           <Route exact path="/upload" render={ (renderProps) => {
-              return <Upload auth={ this.state.auth } />
+              return <Upload  auth={ this.state.auth } />
             }
           } />
           <Route exact path="/logout" render={ (renderProps) => {

@@ -8,8 +8,8 @@ skip_before_action :authenticate!
   end
 
   def libraries_books
-    if current_user_id && current_user_id == params[:user_id]
-      @library = Library.find_by(user_id: params[:user_id])
+    if current_user_id && current_user_id.to_s == params[:user_id]
+      @library = Library.find_by(id: params[:id])
       if @library
         render json: @library.books
       else

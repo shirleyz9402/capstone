@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/users/:user_id/libraries', to: 'users#users_libraries'
   get '/libraries/', to: 'libraries#index'
   post '/libraries/', to: 'libraries#create'
+  get '/libraries/:id', to: 'libraries#libraries_books'
   get '/books/', to: 'books#index'
   post '/books/', to: 'books#create'
   patch '/books/:id', to: 'books#update'

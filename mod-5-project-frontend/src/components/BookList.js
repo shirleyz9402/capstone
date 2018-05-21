@@ -1,6 +1,7 @@
 import React from 'react';
 import Reader from './Reader'
 import ReactFilestack from 'filestack-react';
+import {Link} from 'react-router-dom'
 
 const apikey = 'AhRLM73SCSb2Q9Z4OPxwsz'
 
@@ -28,6 +29,7 @@ export default class BookList extends React.Component {
   const renderBooks = this.props.books.map(book => {
     return (
       // <button value={book.title} onClick={this.handleClick} key={ book.id }>{ book.title }</button>
+
         <ReactFilestack
         apikey={apikey}
         mode="retrieve"
@@ -36,11 +38,15 @@ export default class BookList extends React.Component {
         onSuccess={this.onSuccess}
         />
 
+
     )}
   )
     return (
     <ol>
-      {this.state.selectedbook === null ? renderBooks : <Reader {...this.props} book= {this.state.selectedbook}/>
+      {this.state.selectedbook === null ? renderBooks :
+        <div>
+          <Reader {...this.props} book= {this.state.selectedbook}/>
+        </div>
       }
     </ol>
   )}
