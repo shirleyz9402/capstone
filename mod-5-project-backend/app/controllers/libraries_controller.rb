@@ -8,16 +8,14 @@ skip_before_action :authenticate!
   end
 
   def libraries_books
-    if current_user_id && current_user_id.to_s == params[:user_id]
+    # if current_user_id && current_user_id.to_s == params[:user_id]
       @library = Library.find_by(id: params[:id])
-      if @library
+      @book = Book.includes(:libraries).find(@library.id)
+
+      @library.books << @book
         render json: @library.books
-      else
-        render nothing: true, :status => :not_found
-      end
-    else #NOT AUTHORIZED
-      render nothing: true, :status => :unauthorized
-    end
+      # end
+    # end
   end
 
   def index
@@ -38,7 +36,6 @@ skip_before_action :authenticate!
 
   def destroy
     @library = Library.find(params[:id])
-    @library.books.destroy_all
     @library.destroy
     render json: Library.all
   end
@@ -48,5 +45,6 @@ skip_before_action :authenticate!
   def library_params
     params.require(:library).permit(:id, :name, :user_id, books_attributes:[:id, :title, :author, :cover, :url])
   end
+
 
 end
