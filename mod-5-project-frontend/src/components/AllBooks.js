@@ -3,8 +3,8 @@ import BookList from './BookList'
 
 
 export default class AllBooks extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       books: [],
       filtered: []
@@ -21,7 +21,7 @@ export default class AllBooks extends React.Component {
     }).then(r => r.json())
       .then(r => this.setState({books: r, filtered: r}))
   }
-  handleChange = event => {
+  handleSearch = event => {
     let searchWord = event.target.value
     if(searchWord !== ''){
       this.setState({filtered: this.state.books.filter(book => book.title.toLowerCase().includes(searchWord) || book.author.toLowerCase().includes(searchWord.toLowerCase()))})
@@ -35,9 +35,6 @@ export default class AllBooks extends React.Component {
     console.log('ALLBOOKS PROPS', this.props)
     console.log('ALLBOOKS STATE', this.state)
     return (
-    <div>
-      Search: <input onChange={this.handleChange} placeholder="by title or author..."/>
-      <BookList { ...this.props } books={this.state.filtered} />
-    </div>
+      <BookList { ...this.props } handleSearch={this.handleSearch} books={this.state.filtered} />
   )}
 }

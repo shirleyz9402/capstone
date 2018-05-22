@@ -97,7 +97,12 @@ export default class BookList extends React.Component {
     return (
     <div id="book-list">
       <br/>
-      {this.state.selectedbook === null ? renderBooks :
+      {this.state.selectedbook === null ?
+        <div>
+          Search: <input onChange={this.props.handleSearch} placeholder="by title or author..."/><br/><br/>
+          {renderBooks}
+        </div>
+        :
         <div>
           <Reader {...this.props} book= {this.state.selectedbook}/>
         </div>
