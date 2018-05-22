@@ -13,7 +13,6 @@ skip_before_action :authenticate!
   def books_libraries
     @book = Book.find(params[:id])
     @library = Library.find_by(name: params[:name], user_id: params[:user_id])
-    byebug
     if @library.books.find_by(title: @book.title)
       render json: false
     else

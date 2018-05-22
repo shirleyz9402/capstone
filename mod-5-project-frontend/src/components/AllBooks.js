@@ -6,7 +6,8 @@ export default class AllBooks extends React.Component {
   constructor() {
     super()
     this.state = {
-      books: []
+      books: [],
+      filtered: []
     }
   }
   componentDidMount(){
@@ -18,12 +19,25 @@ export default class AllBooks extends React.Component {
         'Authorization': `Token token=${this.props.auth.token}`
       }
     }).then(r => r.json())
-      .then(r => this.setState({books: r}))
+      .then(r => this.setState({books: r, filtered: r}))
   }
+  handleChange = event => {
+    let searchWord = event.target.value
+    if(searchWord !== ''){
+      this.setState({filtered: this.state.books.filter(book => book.title.toLowerCase().includes(searchWord) || book.author.toLowerCase().includes(searchWord.toLowerCase()))})
+    }
+    else {
+      this.setState({filtered: this.state.books})
+    }
+  }
+
   render(){
     console.log('ALLBOOKS PROPS', this.props)
     console.log('ALLBOOKS STATE', this.state)
     return (
-      <BookList { ...this.props } books={this.state.books} />
+    <div>
+      Search: <input onChange={this.handleChange} placeholder="by title or author..."/>
+      <BookList { ...this.props } books={this.state.filtered} />
+    </div>
   )}
 }

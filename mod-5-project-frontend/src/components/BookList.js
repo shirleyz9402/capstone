@@ -67,24 +67,29 @@ export default class BookList extends React.Component {
     console.log('BOOKLIST STATE',this.state)
     console.log('BOOKLIST PROPS', this.props)
   const renderLibraries = this.state.libs.map(lib => {
-    return (<option value={lib.id} key={lib.name}>{lib.name}</option>)
+    if(lib.name !== "Your Uploads"){
+      return (
+        <option value={lib.id} key={lib.name}>{lib.name}</option>
+      )
+    }
   })
   const renderBooks = this.props.books.map(book => {
     return (
       <form key={book.id} id={book.title}>
-        {book.title}<br/><br/>
+        {book.title}
+        <p>by: {book.author}</p>
         <ReactFilestack
         apikey={apikey}
         mode="retrieve"
         buttonText= "Read"
         options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
         onSuccess={this.onSuccess}
-        />
-        <select id="selectedLib" onChange={this.handleChange}>
-          <option value="">Select a Library</option>
+        /> <br/>
+        <select id="selectedLib" onChange={this.handleChange} defaultValue="default">
+          <option value="default">Select a Library</option>
           {renderLibraries}
         </select>
-        <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/>
+        <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/><br/>
       </form>
 
     )}
