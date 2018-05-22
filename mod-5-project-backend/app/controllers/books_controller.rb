@@ -5,18 +5,23 @@ skip_before_action :authenticate!
       render json: false
     else
       @book = Book.create(book_params)
+      @library = Library.find_by(name: "Your Uploads", user_id: params[:user_id])
+      @library.books << @book
       render json: @book
     end
   end
   def books_libraries
     @book = Book.find(params[:id])
-    @library = Library.find_by(name: params[:name])
-    @book.libraries << @library
-      # @book.update(book_params)
-      # @book.save
-    render json: @book
-    
+    @library = Library.find_by(name: params[:name], user_id: params[:user_id])
+    byebug
+    if @library.books.find_by(title: @book.title)
+      render json: false
+    else
+      @book.libraries << @library
+      render json: @book
+    end
   end
+
   def index
     render json: Book.all
   end

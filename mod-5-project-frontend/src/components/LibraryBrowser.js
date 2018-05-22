@@ -56,31 +56,42 @@ export default class LibraryBrowser extends React.Component {
       })
     }).then(this.getLibs)
   }
-  // handleBack = event => {
-  //   if (this.state.selectedLib){
-  //   this.setState({selectedLib: null})
-  //   }
-  //   else if (this.state.selectedbook){
-  //     this.setState({selectedbook: null})
-  //   }
-  // }
+  handleDelete = id => {
+    console.log(id)
+    fetch(`http://localhost:4000/libraries/${id}`, {
+      method: "DELETE"
+    }).then(this.getLibs)
+  }
   render(){
     console.log('LIBRARYBROWSER STATE',this.state)
     const renderLibs = this.state.libs.map(lib => {
-      return (
-        <div key={lib.name}>
-          <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > {lib.name}</Link><br/><br/>
-        </div>
-      )
+      if(lib.name !== "Your Uploads"){
+        return (
+          <div key={lib.name}>
+            <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > {lib.name}</Link><br/>
+            <button value={lib.id} onClick={event => this.handleDelete(lib.id)}> Delete {lib.name} </button>
+            <br/><br/>
+          </div>
+        )
+      }
+      else {
+        return(
+          <div key={lib.name}>
+            <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > {lib.name}</Link><br/>
+            <br/><br/>
+          </div>
+        )
+      }
     })
 
     return (
       <div>
+      <form>
+        <br/>
+        Create New Library: <input onChange={this.handleChange}/>
+        <button onClick={this.handleClick}>Create Library</button>
+      </form>
         {renderLibs}
-        <form>
-          Create New Library: <input onChange={this.handleChange}/>
-          <button onClick={this.handleClick}>Create Library</button>
-        </form>
       </div>
   )}
 }

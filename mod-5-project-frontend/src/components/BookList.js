@@ -25,7 +25,7 @@ export default class BookList extends React.Component {
       }
     })
     .then(r => r.json())
-    .then(r => r.libraries.forEach(lib => this.setState({libs: [...this.state.libs, lib]})))
+    .then(r => this.setState({libs:r.libraries}))
   }
 
   onSuccess = response => {
@@ -37,10 +37,6 @@ export default class BookList extends React.Component {
     if(this.state.selectedLib){
       event.preventDefault()
       console.log(book)
-      let libraries = {
-        name: this.state.selectedLib.name,
-        user_id: this.props.auth.user_id
-      }
     fetch(`http://localhost:4000/books/${book.id}/libraries`, {
       method: "POST",
       headers: {
@@ -48,7 +44,10 @@ export default class BookList extends React.Component {
         'Accept': 'application/javascript',
         "Authorization": `Token token=${ this.props.auth.token }`
       },
-      body: JSON.stringify(libraries)
+      body: JSON.stringify({
+        name: this.state.selectedLib.name,
+        user_id: this.props.auth.user_id
+      })
     })
     .then(r => r.json())
     .then(r => r ? alert('Succesfully added!') : alert('This book has already been added to your library!'))
@@ -58,13 +57,10 @@ export default class BookList extends React.Component {
   handleChange = event => {
     console.log(event.target.id)
     console.log(event.target.value)
-    if (event.target.id === "selectedLib"){
-      this.setState({selectedLib: this.state.libs.find(lib => lib.id = event.target.value)})
 
-    }
-    else{
-      this.setState({[event.target.id]: event.target.value})
-    }
+      this.setState({selectedLib: this.state.libs.find(lib => lib.id == event.target.value)})
+
+
   }
 
   render(){
@@ -84,8 +80,8 @@ export default class BookList extends React.Component {
         options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
         onSuccess={this.onSuccess}
         />
-        <select id="selectedLib" onChange={this.handleChange} defaultValue="default">
-          <option value="default">Select a Library</option>
+        <select id="selectedLib" onChange={this.handleChange}>
+          <option value="">Select a Library</option>
           {renderLibraries}
         </select>
         <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/>

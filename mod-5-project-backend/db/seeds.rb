@@ -25,5 +25,15 @@ Book.create([
     "title": "Les Miserables",
     "author": "Victor Hugo",
     "url": "https://cdn.filestackcontent.com/7mzXOpa6RMe6SH9zQL5v",
+  },
+  {
+    "title": "Dracula",
+    "author": "Bram Stoker",
+    "url": "https://cdn.filestackcontent.com/mC7HyljnQgCVjv6UMt5x"
+  },
+  {
+    "title": "The Goldfinch",
+    "author": "Donna Tartt",
+    "url": "https://cdn.filestackcontent.com/fpUpT6VkThWBw6TQk5Mb"
   }
 ])

@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @user.username = params[:username]
     @user.password = params[:password]
     if @user.save
+      Library.create(name: "Your Uploads", user_id: @user.id)
       render json: user_hash(@user)
     else
       render json: {

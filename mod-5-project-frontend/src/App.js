@@ -90,8 +90,8 @@ class App extends Component {
         { this.state.auth ?
             <div>
               <Link to="/"> Home </Link>
-              <Link to="/books"> Books </Link>
-              <Link to="/libraries"> Library </Link>
+              <Link to="/books"> All Books </Link>
+              <Link to="/libraries"> Your Libraries </Link>
               <Link to="/upload"> Upload </Link>
               <Link to="/logout"> Log out </Link>
             </div>
