@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 20180522144456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 4) do
   end
 
   create_table "books_libraries", id: false, force: :cascade do |t|
-    t.bigint "library_id", null: false
     t.bigint "book_id", null: false
+    t.bigint "library_id", null: false
   end
 
   create_table "libraries", force: :cascade do |t|

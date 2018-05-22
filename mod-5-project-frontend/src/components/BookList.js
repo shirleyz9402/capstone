@@ -11,7 +11,6 @@ export default class BookList extends React.Component {
     super()
     this.state = {
       libs: [],
-      newLib: '',
       selectedLib: null,
       selectedbook: null
     }
@@ -35,45 +34,24 @@ export default class BookList extends React.Component {
     })
   }
   handleClick = (event, book) => {
-    event.preventDefault()
     if(this.state.selectedLib){
+      event.preventDefault()
       console.log(book)
-    fetch(`http://localhost:4000/libraries/${this.state.selectedLib.id}`, {
+      let libraries = {
+        name: this.state.selectedLib.name,
+        user_id: this.props.auth.user_id
+      }
+    fetch(`http://localhost:4000/books/${book.id}/libraries`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/javascript',
         "Authorization": `Token token=${ this.props.auth.token }`
       },
-      body: JSON.stringify({
-          id: book.id,
-          title: book.title,
-          author: book.author,
-          url:  book.url
-      })
+      body: JSON.stringify(libraries)
     })
     .then(r => r.json())
     .then(r => r ? alert('Succesfully added!') : alert('This book has already been added to your library!'))
-    }
-    else if(this.state.newLib !== ''){
-      fetch('http://localhost:4000/libraries', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Token token=${ this.props.auth.token }`
-        },
-        body: JSON.stringify({
-          name: this.state.newLib,
-          user_id: this.props.auth.user_id,
-          books: {
-            id: book.id,
-            title: book.title,
-            author: book.author,
-            url:  book.url
-          }
-        })
-      })
-      .then(r => r.json())
-      .then(r => r ? alert('Succesfully added!') : alert('This book has already been added to your library!'))
     }
   }
 
@@ -110,9 +88,7 @@ export default class BookList extends React.Component {
           <option value="default">Select a Library</option>
           {renderLibraries}
         </select>
-        <label htmlFor='Library'> or Create Library: <input onChange={this.handleChange}  id="newLib"/></label>
         <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/>
-
       </form>
 
     )}

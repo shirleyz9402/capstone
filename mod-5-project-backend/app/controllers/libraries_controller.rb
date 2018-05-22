@@ -2,36 +2,36 @@ class LibrariesController < ApplicationController
 skip_before_action :authenticate!
   def create
     @library = Library.create(library_params)
-    # @library.name = params[:name]
-    # @library.user_id = params[:user_id]
-    render json: @library
+    render json: @library, :message => true
   end
 
-  def libraries_books
+  def show
     # if current_user_id && current_user_id.to_s == params[:user_id]
-      @library = Library.find_by(id: params[:id])
-      @book = Book.includes(:libraries).find(@library.id)
-
-      @library.books << @book
-        render json: @library.books
-      # end
+    @library = Library.find_by(id: params[:id])
+    render json: @library
     # end
   end
-
+  def libraries_books
+    @library = Library.find(params[:id])
+    @book = Book.find_by(title: params[:title])
+    @library.books << @book
+    render json: @library
+  end
   def index
     @libraries = Library.all
     render json: @libraries
   end
 
-  def show
-    @library = Library.find(params[:id])
-    render json: @library
-  end
-
   def update
     @library = Library.find(params[:id])
-    @library.update(library_params)
-    render json: @library
+    @book = Book.find_by(title: params[:title])
+    if @library.books.find(@book.id)
+      render json: false
+    else
+      @library.books << @book
+      @library.update(library_params)
+      render json: @library
+    end
   end
 
   def destroy
@@ -45,6 +45,5 @@ skip_before_action :authenticate!
   def library_params
     params.require(:library).permit(:id, :name, :user_id, books_attributes:[:id, :title, :author, :cover, :url])
   end
-
 
 end

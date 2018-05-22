@@ -20,7 +20,6 @@ export default class Upload extends React.Component{
       author: '',
       libs: [],
       selectedLib: null,
-      newLib: ''
     }
   }
 
@@ -38,27 +37,6 @@ export default class Upload extends React.Component{
   }
 
   onSuccess = (response) => {
-    if(this.state.newLib !== ''){
-      fetch('http://localhost:4000/libraries', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Token token=${ this.props.auth.token }`
-        },
-        body: JSON.stringify(
-          {
-            name: this.state.newLib,
-            user_id: this.props.auth.user_id
-          }
-        )
-      })
-      this.setState({handle: JSON.stringify(response.filesUploaded[0].handle)})
-    }
-    this.postUpload()
-  }
-
-  postUpload = () => {
-    if(this.state.selectedLib){
     fetch('http://localhost:4000/books', {
       method: "POST",
       headers: {
@@ -68,30 +46,12 @@ export default class Upload extends React.Component{
       body: JSON.stringify({
         title: this.state.title,
         author: this.state.author,
-        url:  'https://cdn.filestackcontent.com/' + this.state.handle,
+        url:  'https://cdn.filestackcontent.com/' + response.filesUploaded[0].handle,
         library_id: this.state.selectedLib.id
       })
     })
     .then(r => r.json())
     .then(r => r ? null : alert('This book has already been added to your library!'))
-    }
-    else {
-      fetch('http://localhost:4000/books', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Token token=${ this.props.auth.token }`
-        },
-        body: JSON.stringify({
-          title: this.state.title,
-          author: this.state.author,
-          url:  'https://cdn.filestackcontent.com/' + this.state.handle,
-          library_id: this.state.libs.length + 1
-        })
-      })
-      .then(r => r.json())
-      .then(r => r ? null : alert('This book has already been added to your library!'))
-    }
   }
 
   handleChange = event => {
@@ -116,7 +76,6 @@ export default class Upload extends React.Component{
           <option value="default">Select a Library</option>
           {renderLibraries}
         </select>
-        <label htmlFor='Library'> or Create Library: <input onChange={this.handleChange}  id="newLib"/></label>
         <br/>
         <label htmlFor='title'>Title: <input onChange={this.handleChange} placeholder="Title" id="title"/></label>
         <br/>
