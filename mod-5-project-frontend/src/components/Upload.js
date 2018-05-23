@@ -47,8 +47,8 @@ export default class Upload extends React.Component{
   render(){
 
     return(
-    <div>
-      <form>
+    <div id="upload">
+      <form id="upload-book">
         <br/>
         <label htmlFor='title'>Title: <input onChange={this.handleChange} placeholder="Title" id="title"/></label>
         <br/>

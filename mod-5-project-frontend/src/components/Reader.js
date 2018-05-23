@@ -75,7 +75,7 @@ export default class Reader extends React.Component{
     // console.log(this.props.book.url)
     const { location } = this.state
     return (
-      <div>
+      <div id={this.props.book}>
       <Container>
         <Bar>
           <CloseButton onClick={this.toggleFullscreen}>

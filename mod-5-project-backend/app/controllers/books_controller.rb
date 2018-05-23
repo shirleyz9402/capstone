@@ -12,7 +12,7 @@ skip_before_action :authenticate!
   end
   def books_libraries
     @book = Book.find(params[:id])
-    @library = Library.find_by(name: params[:name], user_id: params[:user_id])
+    @library = Library.find_by(name: params[:name], user_id: params[:user_id], id: params[:library_id])
     if @library.books.find_by(title: @book.title)
       render json: false
     else

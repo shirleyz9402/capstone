@@ -90,21 +90,21 @@ class App extends Component {
 
         </header>
         <Router>
-        <div>
+        <div id="capstone">
         { this.state.auth ?
-            <div>
-              <Link to="/books"> All Books </Link>
-              <Link to="/libraries"> Your Libraries </Link>
-              <Link to="/upload"> Upload </Link>
-              <Link to="/logout"> Log out </Link>
+            <div class="links">
+              <Link to="/books" id="books-link"> All Books </Link>
+              <Link to="/libraries" id="lib-link"> Your Libraries </Link>
+              <Link to="/upload" id="upload-link"> Upload </Link>
+              <Link to="/logout" id="logout-link"> Log out </Link><br/>
             </div>
           :
-            <div>
-              <Link to="/register">Register</Link><br/>
-              <Link to="/login">Login</Link>
+            <div class="links">
+              <Link to="/register" id="register-link">Register</Link><br/>
+              <Link to="/login" id="login-link">Login</Link>
             </div>
         }
-            <div>
+            <div class="routes">
               <Route exact path="/register" render={ (renderProps) =>
                 <Register history={ renderProps.history } authSet={ this.authFetched } />
               } />

@@ -76,7 +76,7 @@ export default class LibraryBrowser extends React.Component {
       }
       else {
         return(
-          <div key={lib.name}>
+          <div id={lib.name} class="lib" key={lib.name}>
             <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > {lib.name}</Link><br/>
             <br/><br/>
           </div>
@@ -86,7 +86,7 @@ export default class LibraryBrowser extends React.Component {
 
     return (
       <div>
-      <form>
+      <form id="create-lib">
         <br/>
         Create New Library: <input onChange={this.handleChange}/>
         <button onClick={this.handleClick}>Create Library</button>

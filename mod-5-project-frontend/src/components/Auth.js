@@ -50,9 +50,9 @@ export default class AuthForm extends React.Component {
   }
 
   render(){
-    return (<div>
+    return (<div id="auth">
       { this.state.errors.length ? this.errors() : "" }
-      <form onSubmit={ this.handleSubmit }>
+      <form id="auth-form" onSubmit={ this.handleSubmit }>
         <label htmlFor="username">Username</label>
         <input type="text" onChange={ this.handleChange }
                            value={ this.state.username }

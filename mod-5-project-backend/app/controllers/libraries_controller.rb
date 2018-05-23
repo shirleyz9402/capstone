@@ -14,8 +14,12 @@ skip_before_action :authenticate!
   def libraries_books
     @library = Library.find(params[:id])
     @book = Book.find_by(title: params[:title])
-    @library.books << @book
-    render json: @library
+    if @book.libraries.find(@library)
+      render json: false
+    else
+      @library.books << @book
+      render json: @library
+    end
   end
   def index
     @libraries = Library.all

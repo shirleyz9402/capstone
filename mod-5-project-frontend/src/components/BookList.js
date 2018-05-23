@@ -46,7 +46,8 @@ export default class BookList extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.selectedLib.name,
-        user_id: this.props.auth.user_id
+        user_id: this.props.auth.user_id,
+        library_id: this.state.selectedLib.id
       })
     })
     .then(r => r.json())
@@ -75,7 +76,7 @@ export default class BookList extends React.Component {
   })
   const renderBooks = this.props.books.map(book => {
     return (
-      <form key={book.id} id={book.title}>
+      <form key={book.id} id={book.title} class="book">
         {book.title}
         <p>by: {book.author}</p>
         <ReactFilestack
@@ -99,11 +100,11 @@ export default class BookList extends React.Component {
       <br/>
       {this.state.selectedbook === null ?
         <div>
-          Search: <input onChange={this.props.handleSearch} placeholder="by title or author..."/><br/><br/>
+          Search: <input onChange={this.props.handleSearch} id= "search" placeholder="by title or author..."/><br/><br/>
           {renderBooks}
         </div>
         :
-        <div>
+        <div id="reader">
           <Reader {...this.props} book= {this.state.selectedbook}/>
         </div>
       }
