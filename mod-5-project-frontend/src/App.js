@@ -10,6 +10,8 @@ import AllBooks from './components/AllBooks'
 import Reader from './components/Reader'
 import Library from './components/Library'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router'
+
 
 class App extends Component {
   state = {
@@ -42,6 +44,10 @@ class App extends Component {
       return (
         <div>
         <Switch>
+        // <Route exact path='/' render={ () => (
+            this.state.auth.user_id !== null ? (<Redirect to='/books'/>) : (null)
+          )
+        } />
           <Route exact path='/books' render={ (renderProps) => {
               return <AllBooks history={ renderProps.history } auth={ this.state.auth } />
             }
@@ -87,7 +93,6 @@ class App extends Component {
         <div>
         { this.state.auth ?
             <div>
-              <Link to="/"> Home </Link>
               <Link to="/books"> All Books </Link>
               <Link to="/libraries"> Your Libraries </Link>
               <Link to="/upload"> Upload </Link>
