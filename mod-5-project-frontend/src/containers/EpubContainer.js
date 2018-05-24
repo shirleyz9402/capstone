@@ -5,6 +5,7 @@ export const Container = styled.div`
   position: absolute;
   width: 90%;
   height: 100%;
+  margin-left: 10%
   // background: linear-gradient(to bottom, #f2f2f2 0%, #333 100%);
 `
 export const ReaderContainer = styled.div`
@@ -46,7 +47,7 @@ const Button = styled.button`
   background: none;
 `
 export const CloseButton = Button.extend`
-  color: #808080;
+  color: #333;
   float: right;
   margin: 0;
   font-size: 12px;

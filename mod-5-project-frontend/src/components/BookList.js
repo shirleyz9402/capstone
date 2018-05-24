@@ -1,7 +1,9 @@
 import React from 'react';
 import Reader from './Reader'
 import ReactFilestack from 'filestack-react';
-import {Link} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
+import { Redirect } from 'react-router'
+
 
 const apikey = 'AhRLM73SCSb2Q9Z4OPxwsz'
 
@@ -17,6 +19,7 @@ export default class BookList extends React.Component {
 
     }
   }
+
   componentDidMount(){
     fetch(`http://localhost:4000/users/${this.props.auth.user_id}`, {
       method: "GET",
@@ -63,11 +66,12 @@ export default class BookList extends React.Component {
 
       this.setState({selectedLib: this.state.libs.find(lib => lib.id == event.target.value)})
   }
-  
+
 
   render(){
     console.log('BOOKLIST STATE',this.state)
     console.log('BOOKLIST PROPS', this.props)
+
   const renderLibraries = this.state.libs.map(lib => {
     if(lib.name !== "Your Uploads"){
       return (
@@ -84,7 +88,7 @@ export default class BookList extends React.Component {
         <ReactFilestack
           apikey={apikey}
           mode="retrieve"
-          buttonText= "Read"
+          buttonText= 'Read'
           options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
           onSuccess={this.onSuccess}
         />
@@ -102,18 +106,18 @@ export default class BookList extends React.Component {
         </div>
       )
     })
-
     return(
       <div>
         <br/>
         {this.state.selectedbook === null ?
         <div>
-          Search: <input onChange={this.props.handleSearch} id= "search" placeholder="by title or author..."/><br/><br/>
+          Search: <input onChange={this.props.handleSearch} id= "search" placeholder=" by title or author..."/><br/><br/>
           <div id="book-list">
             {renderBooks}
           </div>
         </div>
         :
+
         <div id="reader">
           <Reader {...this.props} book= {this.state.selectedbook}/>
         </div>

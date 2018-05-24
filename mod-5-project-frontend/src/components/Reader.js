@@ -4,6 +4,7 @@ import {
   Container,
   ReaderContainer,
   Bar,
+  Logo,
   CloseButton,
   CloseIcon,
   FontSizeButton
@@ -13,7 +14,7 @@ import {
 
 const storage = global.localStorage || null
 
-export default class Reader extends React.Component{
+export default class Reader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -71,23 +72,16 @@ export default class Reader extends React.Component{
     rendition.themes.fontSize(largeText ? '140%' : '100%')
   }
 
-  render(){
-    // console.log(this.props.book.url)
-    const { location } = this.state
+  render() {
+    const { fullscreen, location } = this.state
     return (
-      <div id={this.props.book}>
       <Container>
-        <Bar>
-          <CloseButton onClick={this.toggleFullscreen}>
-            Use full browser window
-            <CloseIcon />
-          </CloseButton>
-        </Bar>
-        <ReaderContainer>
+
+        <ReaderContainer fullscreen={fullscreen}>
           <ReactReader
             url={this.props.book}
             locationChanged={this.onLocationChanged}
-            title={this.props.book.title}
+          
             location={location}
             getRendition={this.getRendition}
           />
@@ -96,7 +90,6 @@ export default class Reader extends React.Component{
           </FontSizeButton>
         </ReaderContainer>
       </Container>
-      </div>
     )
   }
 }

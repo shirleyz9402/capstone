@@ -50,13 +50,15 @@ export default class Upload extends React.Component{
 
     return(
     <div id="upload">
+      <br/>
       <form id="upload-book">
+        Book Info
         <br/>
-        <label htmlFor='title'>Title: <input onChange={this.handleChange} placeholder="Title" id="title"/></label>
+        <label htmlFor='title'> <input onChange={this.handleChange} placeholder=" title..." id="title"/></label>
         <br/>
-        <label htmlFor='author'>Author: <input onChange={this.handleChange} placeholder="Author" id="author"/></label>
+        <label htmlFor='author'> <input onChange={this.handleChange} placeholder=" author..." id="author"/></label>
         <br/>
-        <label htmlFor='title'>Cover: <input onChange={this.handleChange} placeholder="Cover URL" id="cover"/></label>
+        <label htmlFor='title'> <input onChange={this.handleChange} placeholder=" cover image URL..." id="cover"/></label>
         <br/>
         <ReactFilestack
          apikey={apikey}
