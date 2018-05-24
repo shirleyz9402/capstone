@@ -16,7 +16,8 @@ export default class Upload extends React.Component{
     super()
     this.state = {
       title: '',
-      author: ''
+      author: '',
+      coverURL: 'http://www.clker.com/cliparts/R/w/q/4/j/l/book-md.png'
     }
   }
 
@@ -31,6 +32,7 @@ export default class Upload extends React.Component{
       body: JSON.stringify({
         title: this.state.title,
         author: this.state.author,
+        cover: this.state.coverURL,
         url:  'https://cdn.filestackcontent.com/' + response.filesUploaded[0].handle,
         user_id: this.props.auth.user_id
       })
@@ -53,6 +55,8 @@ export default class Upload extends React.Component{
         <label htmlFor='title'>Title: <input onChange={this.handleChange} placeholder="Title" id="title"/></label>
         <br/>
         <label htmlFor='author'>Author: <input onChange={this.handleChange} placeholder="Author" id="author"/></label>
+        <br/>
+        <label htmlFor='title'>Cover: <input onChange={this.handleChange} placeholder="Cover URL" id="cover"/></label>
         <br/>
         <ReactFilestack
          apikey={apikey}

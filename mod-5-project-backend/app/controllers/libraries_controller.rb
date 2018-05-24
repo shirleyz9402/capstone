@@ -28,14 +28,8 @@ skip_before_action :authenticate!
 
   def update
     @library = Library.find(params[:id])
-    @book = Book.find_by(title: params[:title])
-    if @library.books.find(@book.id)
-      render json: false
-    else
-      @library.books << @book
-      @library.update(library_params)
-      render json: @library
-    end
+    @library.update(library_params)
+    render json: @library
   end
 
   def destroy

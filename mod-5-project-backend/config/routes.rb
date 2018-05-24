@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post '/books/:id/libraries', to: 'books#books_libraries'
   get '/users/:user_id/libraries', to: 'users#users_libraries'
   get '/libraries/:id/books', to: 'libraries#libraries_books'
+  post '/libraries/:id/books', to: 'libraries#libraries_books'
   get '/libraries/:id', to: 'libraries#show'
   patch '/libraries/:id', to: 'libraries#update'
   patch '/books/:id', to: 'books#update'

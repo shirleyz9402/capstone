@@ -12,7 +12,9 @@ export default class BookList extends React.Component {
     this.state = {
       libs: [],
       selectedLib: null,
-      selectedbook: null
+      selectedbook: null,
+      edit: false
+
     }
   }
   componentDidMount(){
@@ -60,9 +62,8 @@ export default class BookList extends React.Component {
     console.log(event.target.value)
 
       this.setState({selectedLib: this.state.libs.find(lib => lib.id == event.target.value)})
-
-
   }
+  
 
   render(){
     console.log('BOOKLIST STATE',this.state)
@@ -76,32 +77,41 @@ export default class BookList extends React.Component {
   })
   const renderBooks = this.props.books.map(book => {
     return (
-      <form key={book.id} id={book.title} class="book">
+      <div class="book">
         {book.title}
         <p>by: {book.author}</p>
+        <img src={book.cover}/> <br/><br/>
         <ReactFilestack
-        apikey={apikey}
-        mode="retrieve"
-        buttonText= "Read"
-        options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
-        onSuccess={this.onSuccess}
-        /> <br/>
-        <select id="selectedLib" onChange={this.handleChange} defaultValue="default">
-          <option value="default">Select a Library</option>
-          {renderLibraries}
-        </select>
-        <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/><br/>
-      </form>
+          apikey={apikey}
+          mode="retrieve"
+          buttonText= "Read"
+          options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
+          onSuccess={this.onSuccess}
+        />
+        {this.props.fromLib ?
+          <button  value={book} onClick={event => this.props.handleDelete(event,book)}>Delete</button> :
 
-    )}
-  )
-    return (
-    <div id="book-list">
-      <br/>
-      {this.state.selectedbook === null ?
+          <form key={book.id} id={book.title} class="book">
+            <select id="selectedLib" onChange={this.handleChange} defaultValue="default">
+            <option value="default">Select a Library</option>
+            {renderLibraries}
+            </select>
+            <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/><br/>
+          </form>
+        }
+        </div>
+      )
+    })
+
+    return(
+      <div>
+        <br/>
+        {this.state.selectedbook === null ?
         <div>
           Search: <input onChange={this.props.handleSearch} id= "search" placeholder="by title or author..."/><br/><br/>
-          {renderBooks}
+          <div id="book-list">
+            {renderBooks}
+          </div>
         </div>
         :
         <div id="reader">
