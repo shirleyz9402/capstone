@@ -82,7 +82,7 @@ export default class BookList extends React.Component {
   const renderBooks = this.props.books.map(book => {
     return (
       <div class="book">
-        {book.title}
+        <h3>{book.title}</h3>
         <p>by: {book.author}</p>
         <img src={book.cover}/> <br/><br/>
         <ReactFilestack
@@ -92,9 +92,11 @@ export default class BookList extends React.Component {
           options={{handle: book.url.slice(-20), extension: '.epub', dl: true}}
           onSuccess={this.onSuccess}
         />
-        {this.props.fromLib ?
-          <button  value={book} onClick={event => this.props.handleDelete(event,book)}>Delete</button> :
-
+        {this.props.fromLib && this.props.fromYourUploads ?
+          <button value={book} onClick={event => this.props.handleDelete(event,book)}>Delete</button>
+          : this.props.fromLib ?
+          <button  value={book} onClick={event => this.props.handleDelete(event,book)}>Remove from Library</button>
+          :
           <form key={book.id} id={book.title} class="book">
             <select id="selectedLib" onChange={this.handleChange} defaultValue="default">
             <option value="default">Select a Library</option>

@@ -1,5 +1,16 @@
 .App {
   text-align: center;
+  font-family: 'Inconsolata', monospace;
+  font-weight: bold;
+}
+.lib {
+  margin-top: 5%;
+  display: inline-grid;
+  align-items: center;
+  width:90%;
+  grid-template-columns: 1fr 1fr;
+  float:right;
+
 }
 #book-list {
   display: inline-grid;
@@ -7,10 +18,16 @@
   grid-template-columns: 1fr 1fr;
   float: right;
   align-items: baseline;
+  font-family: 'Inconsolata', monospace;
+
 }
 img{
   width: 200px;
-  height: auto
+  height: 300px
+}
+select {
+  height: 35px;
+  width: 200px;
 }
 button{
   margin: 5px;
@@ -22,6 +39,11 @@ button:hover {
     color: white;
 
 }
+input {
+  border-radius: 5px;
+  border: 1px solid;
+  width: 250px;
+}
 #reader{
   /* float:right; */
   /* position:relative; */
@@ -29,18 +51,22 @@ button:hover {
 .links{
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-around;
   margin: 0;
   padding: 0;
   width: 10%;
   background-color: #333;
   height: 100%; /* Full height */
   position: fixed; /* Make it stick, even on scroll */
-  overflow: auto; /* Enable scrolling if the sidenav has too much content */
+  overflow: auto;
+  font-weight: bold;
+  font-size: 1.25em
+  /* Enable scrolling if the sidenav has too much content */
 }
 .links a {
   list-style-type: none;
-  margin-top: 30px;
+  margin-top: 90px;
+  margin-bottom: 30px;
   padding: 10px;
   background-color: #333;
   color: white;

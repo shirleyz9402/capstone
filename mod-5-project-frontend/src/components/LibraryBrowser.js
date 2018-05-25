@@ -68,7 +68,7 @@ export default class LibraryBrowser extends React.Component {
       if(lib.name !== "Your Uploads"){
         return (
           <div key={lib.name}>
-            <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > {lib.name}</Link><br/>
+            <br/><Link to={`/libraries/${lib.id}`} value={lib.name} >  <h3>{lib.name}</h3></Link><br/>
             <button value={lib.id} onClick={event => this.handleDelete(lib.id)}> Delete {lib.name} </button>
             <br/><br/>
           </div>
@@ -76,8 +76,8 @@ export default class LibraryBrowser extends React.Component {
       }
       else {
         return(
-          <div id={lib.name} class="lib" key={lib.name}>
-            <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > {lib.name}</Link><br/>
+          <div id={lib.name}  key={lib.name}>
+            <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > <h3>{lib.name}</h3></Link><br/>
             <br/><br/>
           </div>
         )
@@ -86,12 +86,15 @@ export default class LibraryBrowser extends React.Component {
 
     return (
       <div>
-      <form id="create-lib">
-        <br/>
-        Create New Library: <input onChange={this.handleChange}/>
-        <button onClick={this.handleClick}>Create Library</button>
-      </form>
-        {renderLibs}
+
+        <form id="create-lib">
+          <br/>
+          Create New Library: <input onChange={this.handleChange}/>
+          <button onClick={this.handleClick}>Create Library</button>
+        </form>
+        <div class="lib">
+          {renderLibs}
+        </div>
       </div>
   )}
 }

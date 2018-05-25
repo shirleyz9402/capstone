@@ -42,11 +42,17 @@ export default class Upload extends React.Component{
   }
 
   handleChange = event => {
-    this.setState({[event.target.id]: event.target.value})
+    if(event.target.id === "coverURL" && event.target.value === ''){
+      this.setState({[event.target.id]: 'http://www.clker.com/cliparts/R/w/q/4/j/l/book-md.png'})
+    }
+    else{
+      this.setState({[event.target.id]: event.target.value})
+    }
   }
 
 
   render(){
+    console.log(this.state)
 
     return(
     <div id="upload">
@@ -54,11 +60,11 @@ export default class Upload extends React.Component{
       <form id="upload-book">
         Book Info
         <br/>
-        <label htmlFor='title'> <input onChange={this.handleChange} placeholder=" title..." id="title"/></label>
+        <label htmlFor='title'> <input onChange={this.handleChange} placeholder=" title..." id="title" required/></label>
         <br/>
-        <label htmlFor='author'> <input onChange={this.handleChange} placeholder=" author..." id="author"/></label>
+        <label htmlFor='author'> <input onChange={this.handleChange} placeholder=" author..." id="author" required/></label>
         <br/>
-        <label htmlFor='title'> <input onChange={this.handleChange} placeholder=" cover image URL..." id="cover"/></label>
+        <label htmlFor='title'> <input onChange={this.handleChange} placeholder=" cover image URL..." id="coverURL"/></label>
         <br/>
         <ReactFilestack
          apikey={apikey}

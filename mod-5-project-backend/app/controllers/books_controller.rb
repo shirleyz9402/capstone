@@ -46,6 +46,17 @@ skip_before_action :authenticate!
     render json: @book
   end
 
+  def destroy
+    @book = Book.find(params[:id])
+    @library = Library.find_by(id: params[:library_id])
+    if @library.name == 'Your Uploads'
+      Book.all.delete(@book)
+      render json: true
+    else
+      render json: false
+    end
+  end 
+
   private
 
   def book_params
