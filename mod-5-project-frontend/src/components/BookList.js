@@ -15,12 +15,14 @@ export default class BookList extends React.Component {
       libs: [],
       selectedLib: null,
       selectedbook: null,
-      edit: false
-
+      newLib: ''
     }
   }
 
   componentDidMount(){
+    this.getLibs()
+  }
+  getLibs = () => {
     fetch(`http://localhost:4000/users/${this.props.auth.user_id}`, {
       method: "GET",
       headers: {
@@ -61,10 +63,26 @@ export default class BookList extends React.Component {
   }
 
   handleChange = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
-
+    if(event.target.id === 'selectedLib'){
       this.setState({selectedLib: this.state.libs.find(lib => lib.id == event.target.value)})
+    }
+    else {
+      this.setState({newLib: event.target.value})
+    }
+  }
+
+  handleNewLib = (event) => {
+    fetch('http://localhost:4000/libraries', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Token token=${ this.props.auth.token }`
+      },
+      body: JSON.stringify({
+        name: this.state.newLib,
+        user_id: this.props.auth.user_id
+      })
+    }).then(this.getLibs)
   }
 
 
@@ -94,13 +112,14 @@ export default class BookList extends React.Component {
         />
         {this.props.fromLib && this.props.fromYourUploads ?
           <button value={book} onClick={event => this.props.handleDelete(event,book)}>Delete</button>
-          : this.props.fromLib ?
-          <button  value={book} onClick={event => this.props.handleDelete(event,book)}>Remove from Library</button>
           :
           <form key={book.id} id={book.title} class="book">
+            <label htmlFor='newLib'> <input onChange={this.handleChange} placeholder=" Create a new library..." id="newLib" /></label>
+            <button type="reset" onClick={this.handleNewLib}>Create Library</button>
+            <br/>
             <select id="selectedLib" onChange={this.handleChange} defaultValue="default">
-            <option value="default">Select a Library</option>
-            {renderLibraries}
+              <option value="default">Select a Library</option>
+              {renderLibraries}
             </select>
             <button onClick={event => this.handleClick(event,book)}>Add to Library</button><br/><br/><br/>
           </form>

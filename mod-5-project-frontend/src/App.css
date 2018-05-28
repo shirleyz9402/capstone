@@ -43,6 +43,7 @@ input {
   border-radius: 5px;
   border: 1px solid;
   width: 250px;
+  margin: 10px;
 }
 #reader{
   /* float:right; */

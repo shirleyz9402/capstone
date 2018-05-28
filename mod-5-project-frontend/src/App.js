@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
+import AllLibraries from './components/AllLibraries'
 import Upload from './components/Upload'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -67,6 +67,10 @@ class App extends Component {
             }
           } />
           </Switch>
+          <Route  path='/libraries-all' render={ (renderProps) => {
+            return <AllLibraries history={ renderProps.history } auth={ this.state.auth } />
+          }
+          } />
           <Route exact path="/upload" render={ (renderProps) => {
               return <Upload  auth={ this.state.auth } />
             }
@@ -92,9 +96,10 @@ class App extends Component {
         <Router>
         <div id="capstone">
         { this.state.auth ?
-            <div class="links">
+            <div className="links">
               <Link to="/" id="books-link"> All Books </Link>
               <Link to="/libraries" id="lib-link"> Your Libraries </Link>
+              <Link to="/libraries-all" id="all-lib-link"> All Libraries </Link>
               <Link to="/upload" id="upload-link"> Upload </Link>
               <Link to="/logout" id="logout-link"> Log out </Link><br/>
             </div>
