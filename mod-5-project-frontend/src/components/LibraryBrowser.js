@@ -67,7 +67,7 @@ export default class LibraryBrowser extends React.Component {
     const renderLibs = this.state.libs.map(lib => {
       if(lib.name !== "Your Uploads"){
         return (
-          <div key={lib.name}>
+          <div key={lib.id}>
             <br/><Link to={`/libraries/${lib.id}`} value={lib.name} >  <h3>{lib.name}</h3></Link><br/>
             <button value={lib.id} onClick={event => this.handleDelete(lib.id)}> Delete {lib.name} </button>
             <br/><br/>
@@ -76,7 +76,7 @@ export default class LibraryBrowser extends React.Component {
       }
       else {
         return(
-          <div id={lib.name}  key={lib.name}>
+          <div id={lib.name}  key={lib.id}>
             <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > <h3>{lib.name}</h3></Link><br/>
             <br/><br/>
           </div>

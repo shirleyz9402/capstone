@@ -75,19 +75,17 @@ export default class Reader extends React.Component {
   render() {
     const { fullscreen, location } = this.state
     return (
+
       <Container>
 
         <ReaderContainer fullscreen={fullscreen}>
           <ReactReader
             url={this.props.book}
             locationChanged={this.onLocationChanged}
-          
+
             location={location}
             getRendition={this.getRendition}
           />
-          <FontSizeButton onClick={this.onToggleFontSize}>
-            Toggle font-size
-          </FontSizeButton>
         </ReaderContainer>
       </Container>
     )

@@ -23,17 +23,17 @@ export default class AllLibraries extends React.Component {
   handleSearch = event => {
     let searchWord = event.target.value
     if(searchWord !== ''){
-      this.setState({filtered: this.state.libs.filter(lib => lib.name.toLowerCase().includes(searchWord))})
+      this.setState({filtered: this.state.libs.filter(lib => lib.name.toLowerCase().includes(searchWord.toLowerCase()))})
     }
     else {
       this.setState({filtered: this.state.libs})
     }
   }
   render(){
-    const renderLibs = this.state.filtered.map(lib => {
+    const renderLibs = this.state.filtered.sort((a,b) => a.name.localeCompare(b.name)).map(lib => {
       if(lib.name && lib.name !== 'Your Uploads'){
         return(
-          <div id={lib.name}  key={lib.name}>
+          <div id={lib.name}  key={lib.id}>
             <br/><Link to={`/libraries/${lib.id}`} value={lib.name} > <h3>{lib.name}</h3></Link><br/>
             <br/><br/>
           </div>
