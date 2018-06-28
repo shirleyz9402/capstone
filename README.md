@@ -1,5 +1,21 @@
 # Biblio (capstone)
 
+Biblio is a book sharing app that allows users easy access to any eBook that has been uploaded to the app.
+
 Biblio uses a Rails backend and a React frontend. It also implements Epub.js which is a JavaScript library for rendering eBooks in the browser. Filestack, a third party file host website, is used to store uploaded eBooks.
 
-Biblio is a book sharing app that allows users to upload, browse, and read books in the browser. Users can also create libraries and save books to it. Upon registering, every user has a "Your Uploads" library which keeps track of the books the user has uploaded and allows them to delete them if they wish. When a book is uploaded by any user, all other users have access to it. Besides browsing through books, users can also browse through other libraries that have been created. Users can also search through uploaded books by author or title and they can search through libraries by name.
+# Login and Registering
+
+New users are required to required to register with a username and password. Once logged in users have access to libraries and books uploaded by all other users.
+
+# Uploading
+
+The React Filestack component is used to upload books to the app. To upload, users input the title, author, and a cover image url of a book and then select the eBook in ePub format that they would like to upload from their computer. Once successfully uploaded, the book is available to all other users.
+
+# Libraries
+
+Users can create, delete, and browse other libraries created by other users. Books can be added to libraries that the user has created. Users can search through existing libraries by the name of the library. Upon registering, all users have a library named "Your Uploads" in which they can keep track of books they have uploaded and also delete them if they wish.
+
+# Reading in browser
+
+Books can be rendered in the browser and users can read any book that has been uploaded by all other users.
