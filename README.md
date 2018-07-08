@@ -4,6 +4,7 @@ Biblio is a book sharing app that allows users easy access to any eBook that has
 
 Biblio uses a Rails backend and a React frontend. It also implements Epub.js which is a JavaScript library for rendering eBooks in the browser. Filestack, a third party file host website, is used to store uploaded eBooks.
 
+Demo Video : https://youtu.be/P6TbApgP_oM
 # Login and Registering
 
 New users are required to required to register with a username and password. Once logged in users have access to libraries and books uploaded by all other users.
